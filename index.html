@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Daslight Project Scene Shifter</title>
+        <script src="jquery-3.6.3.min.js"></script>
+        <script src="index.js" defer></script>
+        <style>
+            #source-scene-area {
+                display: flex;
+            }
+            .scbank {
+                margin-right: 20px;
+                min-width: max-content;
+            }
+            .pointer {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>daslight-sceneshift</h1>
+        <p>
+            This is a simple browser-based tool to copy scenes from one Daslight
+            project to another.
+        </p>
+        <br />
+        <div id="file-selector-area">
+            <p>
+                <span>Select file with the scenes you want to shift: </span
+                ><input type="file" id="source-file-inp" accept=".dvc" /><span
+                    id="source-file-invalid"
+                    style="display: none; color: red"
+                    >Invalid file</span
+                >
+            </p>
+            <p>
+                <span>Select file you want to shift the scenes to: </span
+                ><input type="file" id="dest-file-inp" accept=".dvc" /><span
+                    id="dest-file-invalid"
+                    style="display: none; color: red"
+                    >Invalid file</span
+                >
+            </p>
+        </div>
+        <div id="source-scene-area"></div>
+        <div id="log">
+            <h3>Log</h3>
+        </div>
+        <button id="save-btn">Download Project</button>
+    </body>
+</html>
