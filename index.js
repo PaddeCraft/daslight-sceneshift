@@ -130,7 +130,7 @@ $("#source-file-inp").change(function (e) {
                     });
                     scenes_html += `
                     <div class="scene">
-                        <p><select id="${dest_bank_id}" class="dest-scene-bank-dropdown"></select><span id="${sc_id}" class="pointer"> (+) </span>
+                        <p><select id="${dest_bank_id}" class="dest-scene-bank-dropdown"></select><span id="${sc_id}" class="add"> + </span>
                         ${scene.name}</p>
                     </div>
                     `;
