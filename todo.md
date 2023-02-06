@@ -1,5 +1,3 @@
 | Todo | Working on it | Finished |   |   |
 |------|---------------|----------|---|---|
-| #1   |               |          |   |   |
-|      |               |          |   |   |
-|      |               |          |   |   |
+| https://github.com/PaddeCraft/daslight-sceneshift/issues/1   |               |          |   |   |
