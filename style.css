@@ -1,0 +1,66 @@
+:root {
+    --background: rgb(32, 32, 32);
+    --background2: rgb(15, 15, 15);
+    --font: rgb(255, 255, 255);
+    --accent: rgb(34, 114, 138);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: rgb(255, 255, 255);
+        --background2: rgb(240, 240, 240);
+        --font: rgb(3, 3, 3);
+        --accent: rgb(52, 157, 189);
+    }
+}
+
+body {
+    color: var(--font);
+    font-family: Inter;
+    background-color: var(--background);
+    user-select: none;
+}
+
+#source-scene-area {
+    display: flex;
+}
+
+.scbank {
+    margin-right: 20px;
+    min-width: max-content;
+}
+
+.add {
+    cursor: pointer;
+    border: 2px solid var(--font);
+    border-radius: 50%;
+    margin-inline: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+.add:hover {
+    color: var(--accent);
+    border: 2px solid var(--accent);
+}
+
+input, button, select {
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    background-color: var(--background2);
+    color: var(--font);
+    
+}
+
+#log > *:first-child {
+    margin-top: 0px;
+}
+
+#log {
+    margin-bottom: 2em;
+    max-height: 20rem;
+    height: 20rem;
+    overflow-y: scroll;
+    background-color: var(--background2);
+    padding: 4px;
+    border-radius: 6px;
+}
