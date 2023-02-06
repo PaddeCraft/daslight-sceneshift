@@ -14,67 +14,34 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <div id="tooltipOverlay">
-            <div id="tooltipBox"></div>
-        </div>
-        <div id="overlay" style="display: none;">
-            <div id="banksel_menu">
-                <div class="banksel_item" onclick="cancel_shift();" style="background-color: #610000;">-- Cancel --</div>
-                <!--
-                <div class="banksel_item">Bank 2</div>
-                <div class="banksel_item">Bank 3</div>
-                <div class="banksel_item">Bank 4</div>-->
-            </div>
-        </div>
-        <div id="invisible">
-            <input type="file" id="dest-file-inp" accept=".dvc" />
-            <input type="file" id="source-file-inp" accept=".dvc" />
-        </div>
-        <main>
-            <h1>Daslight Sceneshifter</h1>
-            <p class="describtion">
-                This is a simple browser-based tool to copy scenes from one Daslight
-                project to another.
+        <h1>daslight-sceneshift</h1>
+        <details>
+            <summary>About & Usage</summary>
+            <script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FPaddeCraft%2Fdaslight-sceneshift%2Fblob%2Fmaster%2Freadme.md%23L2-L3&style=github-dark&type=markdown&showBorder=on&showLineNumbers=on&showFullPath=on&showCopy=on&fetchFromJsDelivr=on"></script>
+        </details>
+        <br />
+        <div id="file-selector-area">
+            <p>
+                <span>Select file with the scenes you want to shift: </span
+                ><input type="file" id="source-file-inp" accept=".dvc" /><span
+                    id="source-file-invalid"
+                    style="display: none; color: red"
+                    >Invalid file</span
+                >
             </p>
-            <details class="detailedInformation">
-                <summary>Usage</summary>
-                <script src="https://emgithub.com/embed-v2.js?target=https%3A%2F%2Fgithub.com%2FPaddeCraft%2Fdaslight-sceneshift%2Fblob%2Fmaster%2Freadme.md&style=default&type=markdown&showBorder=on&showLineNumbers=on&showFullPath=on&showCopy=on&fetchFromJsDelivr=on"></script>
-            </details>
-            <br />
-            <div id="file-selector-area">
-                <p>
-                    <span>Select file with the scenes you want to shift: </span
-                    >
-                </p>
-                <p>
-                    <span>Select file you want to shift the scenes to: </span
-                    >
-                </p>
-            </div>
-            <div class="scene-manager">
-                <div id="src-box">
-                    <h3>Source File</h3>
-                    <label for="source-file-inp">Upload File</label><span id="source-file-invalid" style="display: none; color: red">Invalid file</span>
-                    <div id="src-scenes">
-                        <div class="addBank tooltip" data-tooltip="Not supported yet!">+</div>
-                    </div>
-                </div>
-                <div id="dest-box">
-                    <h3>Destination File</h3>
-                    <label for="dest-file-inp">Upload File</label> <span id="dest-file-invalid" style="display: none; color: red">Invalid file</span>
-                    <div id="dest-scenes">
-                        <div class="addBank tooltip" data-tooltip="Not supported yet!">+</div>
-                    </div>
-                </div>
-            </div>
-            <div id="source-scene-area">
-    
-            </div>
-            <div id="log">
-                <h3>Log</h3>
-            </div>
-            <button id="save-btn">Download Project</button>
-    
-        </main>
+            <p>
+                <span>Select file you want to shift the scenes to: </span
+                ><input type="file" id="dest-file-inp" accept=".dvc" /><span
+                    id="dest-file-invalid"
+                    style="display: none; color: red"
+                    >Invalid file</span
+                >
+            </p>
+        </div>
+        <div id="source-scene-area"></div>
+        <div id="log">
+            <h3>Log</h3>
+        </div>
+        <button id="save-btn">Download Project</button>
     </body>
 </html>
