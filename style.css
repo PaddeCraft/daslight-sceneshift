@@ -20,7 +20,11 @@ body {
     background-color: var(--background);
     user-select: none;
 }
-
+label{
+    background-color: #444444;
+    padding: 1%;
+    cursor: pointer;
+}
 #source-scene-area {
     display: flex;
 }
@@ -76,12 +80,15 @@ input, button, select {
 #src-scenes{
     display: flex;
     overflow-x: scroll;
+    margin-top: 2%;
 }
 #dest-box{
     width: 50%;
 }
 #dest-scenes{
+    display: flex;
     overflow-x: scroll;
+    margin-top: 2%;
 }
 .bankSlot{
     background-color: #333333;
@@ -103,6 +110,7 @@ input, button, select {
     padding-top: 0.1em;
     padding-bottom: 0.1em;
     margin-left: 2em;
+
 }
 #banksel_menu{
     background-color: #444444;

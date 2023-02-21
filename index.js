@@ -61,7 +61,12 @@ function uuidv4() {
         ).toString(16)
     );
 }
-
+function click_moveDestScene(uuid){
+    dest_file_xml.querySelector("SCENE[DASUID='" + uuid + "']").remove();
+    log("Removed Scene " + uuid);
+    let toDel = document.getElementById("src-bank-id-prefix-" + uuid);
+    toDel.remove();
+}
 function shift_scene(uuid_src, bank_uuid_dest) {
     // if bank_uuid_dest does not exist, stop method
     if (!bank_uuid_dest) return;
@@ -78,10 +83,11 @@ function shift_scene(uuid_src, bank_uuid_dest) {
     );
     let sceneObj = document.createElement("div");
     sceneObj.classList.add("singleScene");
+    sceneObj.id = "src-bank-id-prefix-" + uuid_src;
     sceneObj.innerHTML = `
         <h5>${scene.getAttribute("NAME")}</h5>
     <div class="sceneMover" onclick="click_moveDestScene('${uuid_src}')">
-        X──
+        Delete
     </div>`
     dest_bank_html.appendChild(sceneObj);
     dest_file_xml = new DOMParser().parseFromString(
@@ -190,12 +196,7 @@ $("#source-file-inp").change(function (e) {
                     `;
                 });
 
-                $("#source-scene-area").append(`
-                    <div class="scbank">
-                        <h3>${scbank.name}</h3>
-                        ${scenes_html}
-                    </div>
-                `);
+                
             });
             evt_listeners.forEach(function (listener) {
                 $("#" + listener.id).click(listener.f);
@@ -242,10 +243,11 @@ $("#dest-file-inp").change(function (e) {
                 scbank.scenes.forEach(function (scene) {
                     let sceneObj = document.createElement("div");
                     sceneObj.classList.add("singleScene");
+                    sceneObj.id = "src-bank-id-prefix-" + scene.uuid;
                     sceneObj.innerHTML = `
                         <h5>${scene.name}</h5>
                     <div class="sceneMover" onclick="click_moveDestScene('${scene.uuid}')">
-                        X──
+                        Delete
                     </div>`
                     bankobj.appendChild(sceneObj);
 
