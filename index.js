@@ -21,7 +21,7 @@ function parse_xml_by_event(e, callback) {
 function get_scene_banks_by_xml(xml) {
     // from file get group scenes, where the bank & scenes are located
     var scene_banks = xml.querySelector("SCENES");
-    var scene_banks_array = [];// List of all banks with containing scenes
+    var scene_banks_array = []; // List of all banks with containing scenes
     // iterate through the groups
     for (var i = 0; i < scene_banks.children.length; i++) {
         var bank = scene_banks.children[i];
@@ -61,7 +61,7 @@ function uuidv4() {
         ).toString(16)
     );
 }
-function click_moveDestScene(uuid){
+function click_moveDestScene(uuid) {
     dest_file_xml.querySelector("SCENE[DASUID='" + uuid + "']").remove();
     log("Removed Scene " + uuid);
     let toDel = document.getElementById("src-bank-id-prefix-" + uuid);
@@ -71,7 +71,9 @@ function shift_scene(uuid_src, bank_uuid_dest) {
     // if bank_uuid_dest does not exist, stop method
     if (!bank_uuid_dest) return;
     //get GUI Object
-    let dest_bank_html = document.getElementById("dest-bank-id-prefix-" + bank_uuid_dest);
+    let dest_bank_html = document.getElementById(
+        "dest-bank-id-prefix-" + bank_uuid_dest
+    );
     log("Shifting scene " + uuid_src + " to bank " + bank_uuid_dest);
     // get scene content
     var scene_bank = dest_file_xml.querySelector(
@@ -81,6 +83,16 @@ function shift_scene(uuid_src, bank_uuid_dest) {
     var scene = source_file_xml.querySelector(
         "SCENE[DASUID='" + uuid_src + "']"
     );
+
+    var missing_scenes = []; // Check for missing scenes if super scene is copied
+    scene.querySelectorAll("BLOCK[TYPE='1']").forEach(function (sc_block) {
+        sc = sc_block.getAttribute("NAME");
+
+        if (dest_file_xml.querySelector("SCENE[NAME='" + sc + "']") == null) {
+            missing_scenes.push(sc);
+        }
+    });
+
     let sceneObj = document.createElement("div");
     sceneObj.classList.add("singleScene");
     sceneObj.id = "src-bank-id-prefix-" + uuid_src;
@@ -88,7 +100,7 @@ function shift_scene(uuid_src, bank_uuid_dest) {
         <h5>${scene.getAttribute("NAME")}</h5>
     <div class="sceneMover" onclick="click_moveDestScene('${uuid_src}')">
         Delete
-    </div>`
+    </div>`;
     dest_bank_html.appendChild(sceneObj);
     dest_file_xml = new DOMParser().parseFromString(
         dest_file_xml.documentElement.outerHTML.replace(
@@ -97,6 +109,15 @@ function shift_scene(uuid_src, bank_uuid_dest) {
         ),
         "text/xml"
     );
+
+    if (!(missing_scenes.length == 0)) {
+        alert(
+            "You just copied a super scene, but it requires scenes, which are missing in your destination file.\n" +
+                "The following scenes are missing:\n\n" +
+                missing_scenes.join("\n")
+        );
+        log("Detected missing scenes: " + missing_scenes.toString());
+    }
 }
 /*Array.from(document.getElementsByClassName("tooltip")).forEach((e)=>{
     
@@ -123,23 +144,24 @@ function download(filename, text) {
 }
 const overlay = document.getElementById("overlay");
 let mousepos;
-document.addEventListener("mousemove",(e)=>{mousepos = {
-    x: e.pageX,
-    y: e.pageY
-}});
-function click_moveSrcScene(uuid){
+document.addEventListener("mousemove", (e) => {
+    mousepos = {
+        x: e.pageX,
+        y: e.pageY,
+    };
+});
+function click_moveSrcScene(uuid) {
     overlay.style.display = "block";
     overlay.children[0].style.top = mousepos.y + "px";
     overlay.children[0].style.left = mousepos.x + "px";
-    overlay.children[0].setAttribute("data-overUUID",uuid);
+    overlay.children[0].setAttribute("data-overUUID", uuid);
 }
-function moveSrcScene(bank_uuid){
+function moveSrcScene(bank_uuid) {
     let uuid = overlay.children[0].getAttribute("data-overUUID");
     cancel_shift();
-    shift_scene(uuid,bank_uuid);
-
+    shift_scene(uuid, bank_uuid);
 }
-function cancel_shift(){
+function cancel_shift() {
     overlay.style.display = "none";
     overlay.children[0].removeAttribute("data-overUUID");
 }
@@ -165,7 +187,7 @@ $("#source-file-inp").change(function (e) {
                 bankobj.classList.add("bankSlot");
                 bankobj.innerHTML = `
                     <h4>${scbank.name}</h4>
-                `
+                `;
                 document.getElementById("src-scenes").appendChild(bankobj);
                 // go through every scene in the scbank
                 scbank.scenes.forEach(function (scene) {
@@ -175,7 +197,7 @@ $("#source-file-inp").change(function (e) {
                         <h5>${scene.name}</h5>
                     <div class="sceneMover" onclick="click_moveSrcScene('${scene.uuid}')">
                         ──►
-                    </div>`
+                    </div>`;
                     bankobj.appendChild(sceneObj);
                     var sc_id = uuidv4();
                     var dest_bank_id = uuidv4();
@@ -195,8 +217,6 @@ $("#source-file-inp").change(function (e) {
                     </div>
                     `;
                 });
-
-                
             });
             evt_listeners.forEach(function (listener) {
                 $("#" + listener.id).click(listener.f);
@@ -230,12 +250,12 @@ $("#dest-file-inp").change(function (e) {
                 bankobj.id = "dest-bank-id-prefix-" + scbank.uuid;
                 bankobj.innerHTML = `
                     <h4>${scbank.name}</h4>
-                `
+                `;
                 document.getElementById("dest-scenes").appendChild(bankobj);
                 let bank = document.createElement("div");
                 bank.classList.add("banksel_item");
                 bank.innerText = scbank.name;
-                bank.onclick = ()=>{
+                bank.onclick = () => {
                     moveSrcScene(scbank.uuid);
                 };
                 document.getElementById("banksel_menu").appendChild(bank);
@@ -248,9 +268,8 @@ $("#dest-file-inp").change(function (e) {
                         <h5>${scene.name}</h5>
                     <div class="sceneMover" onclick="click_moveDestScene('${scene.uuid}')">
                         Delete
-                    </div>`
+                    </div>`;
                     bankobj.appendChild(sceneObj);
-
                 });
             });
             var select_options_html = "";
